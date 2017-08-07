@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaction;
+use App\Menu;
 use Redirect;
 use Validator;
 
@@ -18,7 +19,8 @@ class TransactionController extends Controller
 
     public function index(){
       $title = "Create Transaction";
-      return view('transaction.index', compact("title"));
+      $menus = Menu::all();
+      return view('transaction.index', compact("title", "menus"));
     }
 
     public function store(Request $request){

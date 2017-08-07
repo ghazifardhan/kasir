@@ -9,7 +9,7 @@
 <div class="container">
   <section class="content">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-10">
         <div class="box">
           <div class="box-header">
             <h2 class="box-title">Daftar Menu</h2>
@@ -29,11 +29,7 @@
                 </tr>
               </thead>
               <tbody>
-              <?php if(count($menu) == 0){ ?>
-              <tr>
-                <td colspan="5">Tidak ada Data</td>
-              </tr>
-              <?php } else { $no = 1; ?>
+              @php $no = 1 @endphp
               @foreach($menu as $item)
               <tr>
                 <td>{{ $no++ }}</td>
@@ -47,7 +43,6 @@
                 </td>
               </tr>
               @endforeach
-            <?php } ?>
             </tbody>
             </table>
         </section>
