@@ -2,6 +2,9 @@
 @section('title')
 {{ $title }}
 @stop
+@section('active')
+{{ 'active' }}
+@stop
 @section('breadcrumb')
 {!! Breadcrumbs::render('menu') !!}
 @stop

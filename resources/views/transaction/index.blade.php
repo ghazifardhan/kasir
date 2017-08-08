@@ -8,6 +8,47 @@
     border: none;
     background-color: transparent;
   }
+  #snackbar {
+      visibility: hidden;
+      min-width: 250px;
+      margin-left: -125px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 2px;
+      padding: 16px;
+      position: fixed;
+      z-index: 1;
+      left: 50%;
+      bottom: 30px;
+      font-size: 17px;
+  }
+
+  #snackbar.show {
+      visibility: visible;
+      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+
+  @-webkit-keyframes fadein {
+      from {bottom: 0; opacity: 0;}
+      to {bottom: 30px; opacity: 1;}
+  }
+
+  @keyframes fadein {
+      from {bottom: 0; opacity: 0;}
+      to {bottom: 30px; opacity: 1;}
+  }
+
+  @-webkit-keyframes fadeout {
+      from {bottom: 30px; opacity: 1;}
+      to {bottom: 0; opacity: 0;}
+  }
+
+  @keyframes fadeout {
+      from {bottom: 30px; opacity: 1;}
+      to {bottom: 0; opacity: 0;}
+  }
 </style>
 @stop
 @section('breadcrumb')
@@ -70,6 +111,20 @@
                   </tbody>
                 </table>
                 <table class="table table-bordered">
+                  <!--
+                  <tr>
+                    <th>PPN 10%</th>
+                    <td>
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <input type="checkbox" id="checkbox-ppn">
+                        </span>
+                        <span class="input-group-addon">Rp</span>
+                        <input type="text" name="ppn" class='form-control ppn' pattern="[0-9]+([\.,][0-9]+)?" title="Hanya angka" readonly="readonly">
+                      </div>
+                    </td>
+                  </tr>
+                -->
                   <tr>
                     <th>Uang Customer</th>
                     <td>
@@ -97,7 +152,12 @@
               <!-- /.box-footer -->
             <!--{!! Form::close() !!}-->
           </div>
+        </div>
     </div>
+  </section>
+
+  <div id="snackbar"></div>
+
 </div>
 @stop
 @section('script')
@@ -108,7 +168,12 @@ var kode_menu = new Array();
 var nama_menu = new Array();
 var qty_menu = new Array();
 var price_menu = new Array();
+var customer_cash;
+var customer_change;
 var item_price;
+var total_price;
+var ppn;
+
 $('.kode_menu').change(function(){
   $.ajax({
     type: 'GET',
@@ -140,6 +205,7 @@ $('.submit').on('click', function(){
 
   //total
   $('.total').text("Rp " + price_menu.reduce(getSum).toString().replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+  total_price = price_menu.reduce(getSum);
 
   //reset form
   $('.kode_menu').val('').trigger('change');
@@ -151,12 +217,29 @@ $('.insert').on('click', function(){
   $.ajax({
     type: 'POST',
     url: '{{ url("/api/test_json") }}',
-    data: {kd_menu: kode_menu, nama: nama_menu, qty: qty_menu, price: price_menu},
-    success: function(resp){
-      console.log(resp);
+    data: {kd_menu: kode_menu, nama: nama_menu, qty: qty_menu, price: price_menu, total_price: total_price, customer_cash: customer_cash, customer_change: customer_change, ppn: 0},
+    success: function(resp, xhr){
+      if(resp.success){
+        clearAllData();
+        showToast(resp.result);
+        console.log(resp.result);
+      } else {
+        showToast(resp.result);
+        console.log(resp.result);
+      }
+    },
+    error: function(xhr){
+      showToast('Transaksi gagal, mohon cek kembali');
     }
   });
 });
+
+function showToast(text){
+    $('#snackbar').text(text);
+    var x = document.getElementById("snackbar")
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
 
 function hapus(x){
   delete kode_menu.pop(x);
@@ -188,15 +271,18 @@ $('input.customer-cash').keyup(function(event) {
   }
 
   $(this).val(function(index, value) {
-      var cash = $(this).val().replace(",","");
-      var change;
+      customer_cash = $(this).val().replace(",","");
       if(price_menu.length == 0){
           $('.customer-change').val(0);
       } else {
-        change = cash - price_menu.reduce(getSum);
-        var m = change.toString().replace(/\D/g, '')
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        $('.customer-change').val(m);
+        customer_change = customer_cash - total_price;
+        if(customer_change < 0){
+          $('.customer-change').val("0");
+        } else {
+          var m = customer_change.toString().replace(/\D/g, '')
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          $('.customer-change').val(m);
+        }
       }
 
       return value
@@ -205,6 +291,45 @@ $('input.customer-cash').keyup(function(event) {
       ;
   });
 });
+
+$('#checkbox-ppn').change(function(){
+  if(document.getElementById("checkbox-ppn").checked){
+    if(price_menu == 0){
+      ppn = 0;
+      $('.ppn').val(ppn.toString().replace(/\D/g, '')
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    } else {
+      ppn = (price_menu.reduce(getSum)*10)/100;
+      $('.ppn').val(ppn.toString().replace(/\D/g, '')
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    }
+  } else {
+    ppn = 0;
+    $('.ppn').val(ppn.toString().replace(/\D/g, '')
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+  }
+});
+
+function clearAllData(){
+  var jml_arr = price_menu.length;
+    console.log(jml_arr);
+  for(var a=0;a<jml_arr;a++){
+    $('.row' + a).remove();
+    delete kode_menu.pop(x)
+    delete nama_menu.pop(x)
+    delete qty_menu.pop(x)
+    delete price_menu.pop(x)
+  }
+  customer_cash = 0;
+  customer_change = 0;
+  item_price = 0;
+  total_price = 0;
+  ppn = 0;
+  x = 0;
+  $('.customer-cash').val(0);
+  $('.customer-change').val(0);
+  $('.total').text("Rp 0");
+}
 
 </script>
 @endsection

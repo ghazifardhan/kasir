@@ -148,10 +148,8 @@ date_default_timezone_set('Asia/Jakarta');
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ url('menu') }}">Menu</a></li>
-          </ul>
-          <ul class="treeview-menu">
-            <li><a href="{{ url('transaction') }}">Transaksi</a></li>
+            <li class="{{ active('menu.*') }}"><a href="{{ url('menu') }}">Menu</a></li>
+            <li class="{{ active('transaction.*') ? 'active' : '' }}"><a href="{{ url('transaction') }}">Transaksi</a></li>
           </ul>
         </li>
       </ul>
