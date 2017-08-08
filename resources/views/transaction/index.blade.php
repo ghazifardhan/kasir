@@ -72,11 +72,21 @@
                 <table class="table table-bordered">
                   <tr>
                     <th>Uang Customer</th>
-                    <td><input type="text" name="price" class='form-control customer-cash' pattern="[0-9]+([\.,][0-9]+)?" title="Hanya angka"></td>
+                    <td>
+                      <div class="input-group">
+                        <span class="input-group-addon">Rp</span>
+                        <input type="text" name="price" class='form-control customer-cash' pattern="[0-9]+([\.,][0-9]+)?" title="Hanya angka">
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <th>Kembalian</th>
-                    <td><input type="text" name="price" class='form-control customer-change' pattern="[0-9]+([\.,][0-9]+)?" title="Hanya angka"></td>
+                    <td>
+                      <div class="input-group">
+                        <span class="input-group-addon">Rp</span>
+                        <input type="text" name="price" class='form-control customer-change' pattern="[0-9]+([\.,][0-9]+)?" title="Hanya angka" readonly="readonly">
+                      </div>
+                    </td>
                   </tr>
                 </table>
               </div>
@@ -178,13 +188,15 @@ $('input.customer-cash').keyup(function(event) {
   }
 
   $(this).val(function(index, value) {
-      var cash = $(this).val();
+      var cash = $(this).val().replace(",","");
       var change;
       if(price_menu.length == 0){
           $('.customer-change').val(0);
       } else {
         change = cash - price_menu.reduce(getSum);
-        $('.customer-change').val(change);
+        var m = change.toString().replace(/\D/g, '')
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        $('.customer-change').val(m);
       }
 
       return value
