@@ -17,4 +17,8 @@ class Transaction extends Model
     protected $fillable = [
       'kode_transaction', 'kode_menu', 'qty', 'price', 'created_by', 'updated_by'
     ];
+
+    public function menu(){
+      return $this->hasOne('App\Menu', 'kode_menu', 'kode_menu');
+    }
 }

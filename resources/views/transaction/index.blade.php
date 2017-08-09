@@ -95,6 +95,7 @@
               <h2 class="pull-left">Total</h2>
               <h2 class="pull-right total">Rp 0</h2>
             </div>
+            {{ csrf_field() }}
             <!-- /.box-header -->
             <!-- form start -->
             <!--{!! Form::model(new App\Transaction, ['class' => 'form-horizontal', 'route' => 'transaction.store']) !!}-->
@@ -173,7 +174,7 @@ var customer_change;
 var item_price;
 var total_price;
 var ppn;
-
+var token = $('input[name="_token"]').val();
 $('.kode_menu').change(function(){
   $.ajax({
     type: 'GET',
@@ -216,8 +217,8 @@ $('.submit').on('click', function(){
 $('.insert').on('click', function(){
   $.ajax({
     type: 'POST',
-    url: '{{ url("/api/test_json") }}',
-    data: {kd_menu: kode_menu, nama: nama_menu, qty: qty_menu, price: price_menu, total_price: total_price, customer_cash: customer_cash, customer_change: customer_change, ppn: 0},
+    url: '{{ url("/store_transaction") }}',
+    data: {_token: token, kd_menu: kode_menu, nama: nama_menu, qty: qty_menu, price: price_menu, total_price: total_price, customer_cash: customer_cash, customer_change: customer_change, ppn: 0},
     success: function(resp, xhr){
       if(resp.success){
         clearAllData();

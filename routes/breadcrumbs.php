@@ -31,3 +31,15 @@ Breadcrumbs::register('transaction', function($breadcrumbs){
   $breadcrumbs->parent('home');
   $breadcrumbs->push('Create Transaction', route('transaction.index'));
 });
+
+// Transaction detail
+
+Breadcrumbs::register('transaction_detail', function($breadcrumbs){
+  $breadcrumbs->parent('home');
+  $breadcrumbs->push('Daftar Transaksi', route('transaction_detail.index'));
+});
+
+Breadcrumbs::register('transaction_detail.show', function($breadcrumbs, $transaction_detail){
+  $breadcrumbs->parent('transaction_detail');
+  $breadcrumbs->push($transaction_detail, route('transaction_detail.show_transaction', $transaction_detail));
+});

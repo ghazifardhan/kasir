@@ -11,13 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
 Route::resource('menu', 'MenuController');
 Route::resource('transaction', 'TransactionController');
+Route::resource('transaction_detail', 'TransactionDetailController');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/store_transaction', 'TransactionController@storeTransaction');
+Route::get('/transaction_detail/{id}/show_transaction', 'TransactionDetailController@showTransaction')->name('transaction_detail.show_transaction');
+Route::get('/', 'HomeController@index')->name('home')->middleware('auth');

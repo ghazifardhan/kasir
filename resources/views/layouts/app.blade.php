@@ -95,7 +95,6 @@ date_default_timezone_set('Asia/Jakarta');
             </a>
             <ul class="dropdown-menu" role="menu">
               <li><a href="{{ route('login') }}">Login</a></li>
-              <li><a href="{{ route('register') }}">Register</a></li>
             </ul>
           </li>
           @else
@@ -135,12 +134,13 @@ date_default_timezone_set('Asia/Jakarta');
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
+        <li class="header">MAIN NAVIGATION</li>
         <li class="treeview">
-          <a href="{{ url('/home') }}">
+          <a href="{{ url('/') }}">
             <!--<i class="fa fa-dashboard"></i>--> <span>Dashboard</span>
           </a>
         </li>
-        <li class="treeview">
+        <li class="treeview {{ active(['menu.*', 'transaction.*', 'transaction_detail.*']) }}">
           <a href="#">
             <span>Admin</span>
             <span class="pull-right-container">
@@ -149,7 +149,8 @@ date_default_timezone_set('Asia/Jakarta');
           </a>
           <ul class="treeview-menu">
             <li class="{{ active('menu.*') }}"><a href="{{ url('menu') }}">Menu</a></li>
-            <li class="{{ active('transaction.*') ? 'active' : '' }}"><a href="{{ url('transaction') }}">Transaksi</a></li>
+            <li class="{{ active('transaction.*') }}"><a href="{{ url('transaction') }}">Transaksi</a></li>
+            <li class="{{ active('transaction_detail.*') }}"><a href="{{ url('transaction_detail') }}">Daftar Transaksi</a></li>
           </ul>
         </li>
       </ul>

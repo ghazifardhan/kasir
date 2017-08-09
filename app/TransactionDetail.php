@@ -21,4 +21,8 @@ class TransactionDetail extends Model
       'created_by',
       'updated_by'
     ];
+
+    public function transaction(){
+      return $this->hasMany('App\Transaction', 'kode_transaction', 'kode_transaction');
+    }
 }
