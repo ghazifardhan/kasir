@@ -55,7 +55,6 @@
 {!! Breadcrumbs::render('transaction') !!}
 @stop
 @section('content')
-<div class="container">
   <section class="content">
     <div class="row">
       <div class="col-md-4">
@@ -65,7 +64,7 @@
           </div>
           <div class="box-body">
             <div class="form-group">
-              <label for="exampleInputEmail1">Kode Menu</label>
+              <label for="kode_menu">Kode Menu</label>
               <select class="form-control select2 kode_menu"style="width: 100%">
                 <option></option>
               @foreach($menus as $menu)
@@ -88,7 +87,7 @@
       </div>
 
       <!-- right column -->
-        <div class="col-md-6">
+        <div class="col-md-8">
           <!-- Horizontal Form -->
           <div class="box box-info">
             <div class="box-header with-border">
@@ -126,6 +125,12 @@
                     </td>
                   </tr>
                 -->
+
+                </table>
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <table class="table table-hover table-bordered">
                   <tr>
                     <th>Uang Customer</th>
                     <td>
@@ -145,9 +150,6 @@
                     </td>
                   </tr>
                 </table>
-              </div>
-              <!-- /.box-body -->
-              <div class="box-footer">
                 <button type="submit" class="btn btn-info pull-left insert">Proses</button>
               </div>
               <!-- /.box-footer -->
@@ -158,8 +160,6 @@
   </section>
 
   <div id="snackbar"></div>
-
-</div>
 @stop
 @section('script')
 <script>

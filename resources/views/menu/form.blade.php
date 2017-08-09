@@ -33,7 +33,12 @@
                           <?php } ?>
                               <tr>
                                   <td>Kode Menu</td>
-                                  <td><input type="text" name="kode_menu" class='form-control' value="<?php if($menu){echo $menu->kode_menu;} ?>"></td>
+                                  <td>
+                                    <div id="check-kode">
+                                      <input type="text" name="kode_menu" class='form-control' value="<?php if($menu){echo $menu->kode_menu;} ?>">
+                                      <span class="help-block"></span>
+                                    </div>
+                                  </td>
                               </tr>
                               <tr>
                                   <td>Nama Menu</td>
@@ -41,7 +46,11 @@
                               </tr>
                               <tr>
                                   <td>Price</td>
-                                  <td><input type="text" name="price" class='form-control number' pattern="[0-9]+([\.,][0-9]+)?" title="Hanya angka" value="<?php if($menu){echo $menu->price;} ?>"></td>
+                                  <td>
+                                      <div class="input-group">
+                                        <span class="input-group-addon">Rp</span><input type="text" name="price" class='form-control number' pattern="[0-9]+([\.,][0-9]+)?" title="Hanya angka" value="<?php if($menu){echo $menu->price;} ?>">
+                                      </div>
+                                    </td>
                               </tr>
                               <tr>
                                   <td></td>
@@ -75,6 +84,39 @@
               .replace(/\D/g, '')
               .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
           ;
+      });
+    });
+
+    var d = document.getElementById("check-kode");
+
+    $('input[name="kode_menu"]').keyup(function(event){
+      // get keycode of current keypress event
+      var code = (event.keyCode || event.which);
+      // do nothing if it's an arrow key
+      if(code == 37 || code == 38 || code == 39 || code == 40) {
+          return;
+      }
+      $(this).val(function(index, value){
+        if(value == ""){
+          d.className = "";
+          $('.help-block').text("");
+        } else {
+          $.ajax({
+            type: 'POST',
+            url: '{{ url("/api/check_kode_menu") }}',
+            data: {kode_menu: value},
+            success: function(resp){
+              if(resp.success){
+                d.className = "has-success";
+                $('.help-block').text(resp.result);
+              } else {
+                d.className = "has-error";
+                $('.help-block').text(resp.result);
+              }
+            }
+          });
+        }
+        return value;
       });
     });
 

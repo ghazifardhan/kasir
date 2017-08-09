@@ -6,10 +6,9 @@
 {!! Breadcrumbs::render('transaction_detail.show', $id) !!}
 @stop
 @section('content')
-<div class="container">
   <section class="content">
     <div class="row">
-      <div class="col-xs-10">
+      <div class="col-md-12">
         <div class="box">
           <div class="box-header">
             <h2 class="box-title">{{ $title }}</h2>
@@ -40,11 +39,11 @@
               @endforeach
             </tbody>
             </table>
-        </section>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 @stop
 @section('script')
 <script>

@@ -25,3 +25,14 @@ Route::get('/get_item_data/{id}', function(Request $request, $id){
   $res['result'] = $menu;
   return response($res);
 });
+
+Route::post('/check_kode_menu', function(Request $request){
+  if(!Menu::where('kode_menu', $request->input('kode_menu'))->exists()){
+    $res['success'] = true;
+    $res['result'] = 'Kode menu tersedia';
+  } else {
+    $res['success'] = false;
+    $res['result'] = 'Kode menu sudah ada';
+  }
+  return response($res);
+});

@@ -10,11 +10,11 @@ date_default_timezone_set('Asia/Jakarta');
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="{{ asset('css/ionicons.min.css') }}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('plugins/iCheck/flat/blue.css') }}">
   <!-- Morris chart -->
@@ -63,20 +63,19 @@ date_default_timezone_set('Asia/Jakarta');
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="{{ url('/home') }}" class="logo">
+    <a href="{{ url('/') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>PSP</span>
+      <span class="logo-mini"><b>RHA</b></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>RH Cafe</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
-      <!--
+
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
-      -->
 
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
@@ -137,20 +136,20 @@ date_default_timezone_set('Asia/Jakarta');
         <li class="header">MAIN NAVIGATION</li>
         <li class="treeview">
           <a href="{{ url('/') }}">
-            <!--<i class="fa fa-dashboard"></i>--> <span>Dashboard</span>
+            <i class="fa fa-dashboard"></i><span>Dashboard</span>
           </a>
         </li>
         <li class="treeview {{ active(['menu.*', 'transaction.*', 'transaction_detail.*']) }}">
           <a href="#">
-            <span>Admin</span>
+            <i class="fa fa-user-circle"></i><span>Admin</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="{{ active('menu.*') }}"><a href="{{ url('menu') }}">Menu</a></li>
-            <li class="{{ active('transaction.*') }}"><a href="{{ url('transaction') }}">Transaksi</a></li>
-            <li class="{{ active('transaction_detail.*') }}"><a href="{{ url('transaction_detail') }}">Daftar Transaksi</a></li>
+            <li class="{{ active('menu.*') }}"><a href="{{ url('menu') }}"><i class="fa fa-circle-o"></i>Menu</a></li>
+            <li class="{{ active('transaction.*') }}"><a href="{{ url('transaction') }}"><i class="fa fa-circle-o"></i>Transaksi</a></li>
+            <li class="{{ active('transaction_detail.*') }}"><a href="{{ url('transaction_detail') }}"><i class="fa fa-circle-o"></i>Daftar Transaksi</a></li>
           </ul>
         </li>
       </ul>
@@ -190,14 +189,12 @@ date_default_timezone_set('Asia/Jakarta');
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="{{ asset('js/app.js') }}"></script>
+<!-- jQuery 3 -->
+<script src="{{ asset('js/jquery.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ asset('plugins/select2/select2.full.min.js') }}"></script>
-<!-- Bootstrap 3.3.6 -->
-<!-- Morris.js charts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="{{ asset('plugins/morris/morris.min.js') }}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="{{ asset('dist/js/bootstrap.min.js') }}"></script>
 <!-- Sparkline -->
 <script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js') }}"></script>
 <!-- jvectormap -->
@@ -206,7 +203,6 @@ date_default_timezone_set('Asia/Jakarta');
 <!-- jQuery Knob Chart -->
 <script src="{{ asset('plugins/knob/jquery.knob.js') }}"></script>
 <!-- daterangepicker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
 <script src="{{ asset('plugins/daterangepicker/daterangepicker.js') }}"></script>
 <!-- datepicker -->
 <script src="{{ asset('plugins/datepicker/bootstrap-datepicker.js') }}"></script>
