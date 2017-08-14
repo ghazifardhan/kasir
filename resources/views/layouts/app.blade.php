@@ -36,6 +36,8 @@ date_default_timezone_set('Asia/Jakarta');
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
+  <!-- Selectize CSS -->
+  <link rel="stylesheet" href="{{ asset('plugins/selectize/css/selectize.bootstrap3.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -217,6 +219,8 @@ date_default_timezone_set('Asia/Jakarta');
 <!-- Datatable JS -->
 <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+<!-- Selectize -->
+<script src="{{ asset('plugins/selectize/js/standalone/selectize.min.js') }}"></script>
 
 <script type="text/javascript">
 
